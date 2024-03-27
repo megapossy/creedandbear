@@ -13,36 +13,39 @@
       </div>
     </CardHeader>
     <CardContent>
-      <template v-if="isFetching">
-        <div v-for="item in 5" :key="item" class="flex items-center space-x-4 w-full mt-4 mb-12">
-          <Skeleton class="h-12 w-12 min-w-12 rounded-full" />
-          <div class="space-y-2 w-full">
-            <Skeleton class="h-4 w-[90%]" />
-            <Skeleton class="h-4 w-[80%]" />
+      <FadeUp>
+        <div v-if="isFetching">
+          <div v-for="item in 5" :key="item" class="flex items-center space-x-4 w-full mt-4 mb-12">
+            <Skeleton class="h-12 w-12 min-w-12 rounded-full" />
+            <div class="space-y-2 w-full">
+              <Skeleton class="h-4 w-[90%]" />
+              <Skeleton class="h-4 w-[80%]" />
+            </div>
+            <Skeleton class="h-8 w-8 min-w-8 rounded-full hidden sm:block" />
+            <Skeleton class="h-8 w-8 min-w-8 rounded-full" />
+            <Skeleton class="h-8 w-8 min-w-8 rounded-full" />
           </div>
-          <Skeleton class="h-8 w-8 min-w-8 rounded-full hidden sm:block" />
-          <Skeleton class="h-8 w-8 min-w-8 rounded-full" />
-          <Skeleton class="h-8 w-8 min-w-8 rounded-full" />
         </div>
-      </template>
-      <div v-else-if="!users.hasUsers" class="flex flex-col justify-center items-center p-8">
-        <PackageOpenIcon class="text-7xl mt-4" width="1em" height="1em" />
-        <p class="text-xl opacity-50 mt-4">No users...</p>
-      </div>
-      <Table v-else>
-        <TableBody>
-          <Row v-for="user in users.dataAsUsers" :key="user.data?.id" :user="user" />
-        </TableBody>
-      </Table>
-
+        <div v-else-if="!users.hasUsers" class="flex flex-col justify-center items-center p-8">
+          <PackageOpenIcon class="text-7xl mt-4" width="1em" height="1em" />
+          <p class="text-xl opacity-50 mt-4">No users...</p>
+        </div>
+        <Table v-else>
+          <TableBody>
+            <Row v-for="user in users.dataAsUsers" :key="user.data?.id" :user="user" />
+          </TableBody>
+        </Table>
+      </FadeUp>
       <ViewUserDialog :action="modalAction" :user="selectedUser" />
       <EditUserDialog :action="modalAction" :user="selectedUser" />
       <DeleteUserDialog :action="modalAction" :user="selectedUser" />
 
     </CardContent>
-    <CardFooter v-if="!isFetching && !isLoadingFetchUser && data">
-      <Pagination v-model:page="page" :total="data.total" :totalPages="data.total_pages" />
-    </CardFooter>
+    <FadeUp>
+      <CardFooter v-if="!isFetching && !isLoadingFetchUser && data">
+        <Pagination v-model:page="page" :total="data.total" :totalPages="data.total_pages" />
+      </CardFooter>
+    </FadeUp>
   </Card>
 </template>
 

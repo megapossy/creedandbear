@@ -2,18 +2,20 @@
   <TableRow>
     <TableCell>
       <div>
-        <div class="h-10 w-10 mb-2 rounded-full overflow-hidden border-2
+        <div>
+          <div class="h-10 w-10 mb-2 rounded-full overflow-hidden border-2
         flex items-center justify-center
         ">
-          <img v-if="userData?.avatar" class="h-10 w-10" :src="userData.avatar" />
-          <CircleUser v-else class="h-10 w-10" />
+            <img v-if="userData?.avatar" class="h-10 w-10" :src="userData.avatar" />
+            <CircleUser v-else class="h-10 w-10" />
+          </div>
+          <span class="font-medium">
+            {{ userData?.first_name }} {{ userData?.last_name }}
+          </span>
         </div>
-        <span class="font-medium">
-          {{ userData?.first_name }} {{ userData?.last_name }}
-        </span>
-      </div>
-      <div class="hidden text-sm text-muted-foreground md:inline">
-        {{ userData?.email }}
+        <div class="hidden text-sm text-muted-foreground md:inline">
+          {{ userData?.email }}
+        </div>
       </div>
     </TableCell>
     <TableCell class="text-right">
