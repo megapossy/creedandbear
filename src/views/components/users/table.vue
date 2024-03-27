@@ -5,7 +5,7 @@
         <CardTitle class="flex justify-between">
           <div>
             Users
-            <SVGLoading v-if="isLoadingFetchUser" class="h-5 w-5 inline text-black animate-spin ms-2 " />
+            <SVGLoading v-if="isLoadingFetchUser" class="h-5 w-5 inline text-slate-400 animate-spin ms-2 " />
           </div>
           <RefreshCcw v-if="isFetching" class="cursor-default opacity-40" />
           <RefreshCcw  v-else @click="execute()" class="cursor-pointer" />
@@ -68,7 +68,7 @@ import { useRoute } from 'vue-router'
 
 const users = new Users();
 const page = ref(1)
-const { data, isFetching, execute } = UserFetch.createUseFetch({ page })
+const { data, isFetching, execute } = UserFetch.createUseFetchUsers({ page })
 
 const isLoadingFetchUser = ref(false);
 const route = useRoute();

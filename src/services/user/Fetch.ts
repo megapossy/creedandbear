@@ -12,15 +12,14 @@ export class Fetch {
     console.log('Fetching:', userId)
 
     // fake api
-    const createFakeUser = () => ({
+    await waits(2000)
+    return {
       id: userId,
       email: faker.internet.email(),
       first_name: faker.person.firstName(),
       last_name: faker.person.lastName(),
       avatar: faker.image.avatar()
-    })
-    await waits(2000)
-    return createFakeUser()
+    }
     /////////////////////////////////
   }
 
@@ -43,7 +42,7 @@ export class Fetch {
     /////////////////////////////////
   }
 
-  static createUseFetch(options: { page: Ref<number> }) {
+  static createUseFetchUsers(options: { page: Ref<number> }) {
     const url = computed(() => {
       return 'http://localhost:5173/' + options.page.value
     })

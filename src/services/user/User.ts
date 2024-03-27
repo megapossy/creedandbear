@@ -13,11 +13,9 @@ export class User {
     } else if (user) {
       if (this._store.getUserById(user.id)) {
         this._userId = user.id
-        console.log('this._userId sss', this._userId)
       } else {
         this._store.users = [...this._store.users, user]
         this._userId = user.id
-        console.log('this._userId xxx', user)
       }
     }
   }
