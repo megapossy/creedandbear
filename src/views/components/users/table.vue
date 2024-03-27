@@ -7,8 +7,25 @@
             Users
             <SVGLoading v-if="isLoadingFetchUser" class="h-5 w-5 inline text-slate-400 animate-spin ms-2 " />
           </div>
-          <RefreshCcw v-if="isFetching || isLoadingFetchUser" class="cursor-default opacity-40" />
-          <RefreshCcw v-else @click="execute()" class="cursor-pointer" />
+          <div class="flex">
+
+            <PlusCircle class="me-3" :class="{
+              'cursor-default opacity-40': isFetching || isLoadingFetchUser,
+              'cursor-pointer': !(isFetching || isLoadingFetchUser)
+            }" @click="() => {
+              if (!(isFetching || isLoadingFetchUser))
+                execute()
+            }" />
+
+            <RefreshCcw class="" :class="{
+              'cursor-default opacity-40': isFetching || isLoadingFetchUser,
+              'cursor-pointer': !(isFetching || isLoadingFetchUser)
+            }" @click="() => {
+              if (!(isFetching || isLoadingFetchUser))
+                execute()
+            }" />
+
+            </div>
         </CardTitle>
       </div>
     </CardHeader>
@@ -42,7 +59,7 @@
 
     </CardContent>
     <FadeUp>
-      <CardFooter v-if="!isFetching && !isLoadingFetchUser && data">
+      <CardFooter v-if="!isFetching && !isLoadingFetchUser && data" class="justify-center">
         <Pagination v-model:page="page" :total="data.total" :totalPages="data.total_pages" />
       </CardFooter>
     </FadeUp>
@@ -64,7 +81,7 @@ import SVGLoading from "@/assets/images/loading.svg"
 import { Fetch as UserFetch } from '@/services/user/Fetch'
 import { User } from '@/services/user/User'
 import { Users } from '@/services/user/Users'
-import { PackageOpenIcon, RefreshCcw } from 'lucide-vue-next'
+import { PackageOpenIcon, RefreshCcw, PlusCircle } from 'lucide-vue-next'
 import { onMounted, ref, provide } from 'vue'
 import { provider, type Action } from "@/composables/userModalProvider"
 import { useRoute } from 'vue-router'
