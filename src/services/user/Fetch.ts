@@ -1,6 +1,5 @@
 import { type UserType } from '@/types/user'
 
-import { useStore } from '@/stores/users'
 import { faker } from '@faker-js/faker'
 
 import { waits } from '@/utils/helpers'
@@ -8,7 +7,7 @@ import { computed, type Ref } from 'vue'
 import { useFetch } from '@vueuse/core'
 
 export class Fetch {
-  static async fetchUserById(userId: UserType['id']) {
+  static async userById(userId: UserType['id']) {
     console.log('Fetching:', userId)
 
     // fake api
@@ -20,25 +19,6 @@ export class Fetch {
       last_name: faker.person.lastName(),
       avatar: faker.image.avatar()
     }
-    /////////////////////////////////
-  }
-
-  static async fetchUsers() {
-    console.log('Fetching USERS')
-
-    // fake api
-    const createFakeUser = () => ({
-      id: faker.number.int({ min: 2, max: 100 }),
-      email: faker.internet.email(),
-      first_name: faker.person.firstName(),
-      last_name: faker.person.lastName(),
-      avatar: faker.image.avatar()
-    })
-    const users: UserType[] = faker.helpers.multiple(createFakeUser, {
-      count: 50
-    })
-    await waits(2000)
-    return users
     /////////////////////////////////
   }
 

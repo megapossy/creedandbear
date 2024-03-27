@@ -13,19 +13,19 @@
             <Label for="name" class="text-right col-span-2 md:col-span-1">
               First Name:
             </Label>
-            <p class=" font-bold">{{ userData?.first_name }}</p>
+            <p class="text-wrap break-all font-bold col-span-3 md:col-span-4">{{ userData?.first_name }}</p>
           </div>
           <div class="grid grid-cols-5 items-center gap-4">
             <Label for="name" class="text-right col-span-2 md:col-span-1">
               Last Name:
             </Label>
-            <p class=" font-bold">{{ userData?.last_name }}</p>
+            <p class="text-wrap break-all font-bold col-span-3 md:col-span-4">{{ userData?.last_name }}</p>
           </div>
           <div class="grid grid-cols-5 items-center gap-4">
             <Label for="name" class="text-right col-span-2 md:col-span-1">
               Email:
             </Label>
-            <p class=" font-bold">{{ userData?.email }}</p>
+            <p class="text-wrap break-all font-bold col-span-3 md:col-span-4">{{ userData?.email }}</p>
           </div>
         </div>
         <div class="flex-1 min-w-28 flex items-center justify-center">

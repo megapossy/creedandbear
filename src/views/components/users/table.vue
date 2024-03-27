@@ -7,8 +7,8 @@
             Users
             <SVGLoading v-if="isLoadingFetchUser" class="h-5 w-5 inline text-slate-400 animate-spin ms-2 " />
           </div>
-          <RefreshCcw v-if="isFetching" class="cursor-default opacity-40" />
-          <RefreshCcw  v-else @click="execute()" class="cursor-pointer" />
+          <RefreshCcw v-if="isFetching || isLoadingFetchUser" class="cursor-default opacity-40" />
+          <RefreshCcw v-else @click="execute()" class="cursor-pointer" />
         </CardTitle>
       </div>
     </CardHeader>
@@ -40,7 +40,7 @@
       <DeleteUserDialog :action="modalAction" :user="selectedUser" />
 
     </CardContent>
-    <CardFooter v-if="!isFetching && data">
+    <CardFooter v-if="!isFetching && !isLoadingFetchUser && data">
       <Pagination v-model:page="page" :total="data.total" :totalPages="data.total_pages" />
     </CardFooter>
   </Card>
@@ -62,7 +62,7 @@ import { Fetch as UserFetch } from '@/services/user/Fetch'
 import { User } from '@/services/user/User'
 import { Users } from '@/services/user/Users'
 import { PackageOpenIcon, RefreshCcw } from 'lucide-vue-next'
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, ref, provide } from 'vue'
 import { provider, type Action } from "@/composables/userModalProvider"
 import { useRoute } from 'vue-router'
 
@@ -71,25 +71,25 @@ const page = ref(1)
 const { data, isFetching, execute } = UserFetch.createUseFetchUsers({ page })
 
 const isLoadingFetchUser = ref(false);
+provide('isLoadingFetchUser', isLoadingFetchUser)
 const route = useRoute();
 onMounted(async () => {
   if (!users.hasUsers) {
     await execute();
     if (data.value?.users)
       users.setUsersToStore(data.value.users)
+  }
 
-
-    // with userId params 
-    if (route.params?.userId && !Array.isArray(route.params?.userId)) {
-      isLoadingFetchUser.value = true
-      const userRes = await UserFetch.fetchUserById(Number.parseInt(route.params.userId))
-      const userFnd = new User(userRes)
-      if (userFnd.data) {
-        selectedUser.value = userFnd
-        modalAction.value = 'view'
-      }
-      isLoadingFetchUser.value = false
+  // with userId params 
+  if (route.params?.userId && !Array.isArray(route.params?.userId)) {
+    isLoadingFetchUser.value = true
+    const userRes = await UserFetch.userById(Number.parseInt(route.params.userId))
+    const userFnd = new User(userRes)
+    if (userFnd.data) {
+      selectedUser.value = userFnd
+      modalAction.value = 'view'
     }
+    isLoadingFetchUser.value = false
   }
 })
 
