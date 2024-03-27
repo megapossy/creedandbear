@@ -21,10 +21,7 @@ const useStore = defineStore('auth', () => {
   }
   ///////////////////
 
-  const isUserLoggedIn = computed(() => {
-    return !!user.value?.isLoggedIn
-  })
-  return { user, isUserLoggedIn }
+  return { user }
 })
 
 // For localStorage

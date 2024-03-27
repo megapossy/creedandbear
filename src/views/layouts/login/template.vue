@@ -1,7 +1,7 @@
 <template>
   <main>
     <div
-      className="container relative h-screen flex-col items-center justify-center lg:max-w-none lg:grid lg:grid-cols-2 lg:px-0">
+      className="container px-0 relative h-screen flex-col items-center justify-center lg:max-w-none lg:grid lg:grid-cols-2 lg:px-0">
       <div className="relative h-[170px] lg:h-full flex-col bg-muted p-10 text-white lg:flex lg:border-r">
         <div className="absolute inset-0 bg-zinc-900" />
         <div className="relative z-20 flex items-center text-lg font-medium">
