@@ -16,9 +16,8 @@ const router = createRouter({
       },
       children: [
         {
-          path: 'users',
+          path: 'users/:userId?',
           name: 'users',
-
           component: () => import('@/views/pages/users-page.vue')
         },
         {

@@ -15,7 +15,7 @@
 
         <SheetTrigger as-child>
           <RouterLink class="hover:text-foreground" :to="{ name: 'users' }">
-            Users
+            Home
           </RouterLink>
         </SheetTrigger>
       </nav>

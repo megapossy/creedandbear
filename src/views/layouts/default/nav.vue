@@ -7,7 +7,7 @@
     </div>
 
     <RouterLink class="text-foreground text-xl font-bold transition-colors hover:text-foreground" :to="{ name: 'users' }">
-      Users
+      Home
     </RouterLink>
   </nav>
 </template>

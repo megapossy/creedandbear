@@ -1,13 +1,17 @@
 import { waits } from '@/utils/helpers'
 import { UserSchema } from '@/types/user'
-import { useStore } from '@/stores/auth'
+import { useStore as useAuthStore } from '@/stores/auth'
+import { useStore as useUsersStore } from '@/stores/users'
 
 import { faker } from '@faker-js/faker'
 
 export class Action {
   static async logout() {
-    const userStore = useStore()
-    userStore.user = undefined
+    const authStore = useAuthStore()
+    authStore.user = undefined
+    
+    const usersStore = useUsersStore()
+    usersStore.users = []
   }
   
   static async login(email: string) {
@@ -17,7 +21,7 @@ export class Action {
     await waits(2000)
     if (email !== 'superuser@creedandbear.com')
       throw new Error(`[{"message":"Invalid Login Credentials! Try superuser@creedandbear.com"}]`)
-    const userStore = useStore()
+    const authStore = useAuthStore()
     const fakeAuthUser = {
       id: 1,
       email: 'superuser@creedandbear.com',
@@ -26,7 +30,7 @@ export class Action {
       avatar: faker.image.avatar(),
       isLoggedIn: true
     }
-    userStore.user = fakeAuthUser
+    authStore.user = fakeAuthUser
     /////////////////////////////////
   }
 }
