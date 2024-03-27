@@ -1,26 +1,39 @@
 import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
-import { Auth } from '@/services/Auth'
+import type { UserType } from '@/types/user'
+import { faker } from '@faker-js/faker'
 
-interface AuthUser extends User {
+interface AuthUser extends UserType {
   isLoggedIn: boolean
 }
 
-export const useStore = defineStore('auth', () => {
+const useStore = defineStore('auth', () => {
   const user = ref<AuthUser | undefined>()
 
+  // TODO: Remove this, testing only
   user.value = {
-    id: 2,
-    email: 'janet.weaver@reqres.in',
-    first_name: 'Janet',
-    last_name: 'Weaver',
-    avatar: 'https://reqres.in/img/faces/2-image.jpg',
-    isLoggedIn: false
+    id: 1,
+    email: 'superuser@creedandbear.com',
+    first_name: faker.person.firstName(),
+    last_name: faker.person.lastName(),
+    avatar: faker.image.avatar(),
+    isLoggedIn: true
   }
+  ///////////////////
 
-  const login = async (user: { email: string }) => {
-    await Auth.login(user.email)
-  }
-
-  return { user, login }
+  const isUserLoggedIn = computed(() => {
+    return !!user.value?.isLoggedIn
+  })
+  return { user, isUserLoggedIn }
 })
+
+// For localStorage
+// const store = useStore()
+// store.$subscribe(
+//   (mutation, state) => {
+//     localStorage.setItem('auth', JSON.stringify(state))
+//   },
+//   { detached: true }
+// )
+
+export { useStore }

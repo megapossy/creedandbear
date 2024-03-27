@@ -10,7 +10,7 @@
             Enter your email below to sign-in
           </p>
         </div>
-        <MyInput v-model="email" label="Email" />
+        <MyInput v-model="email" label="Email" :error="errorText" />
         <MyButton type="submit" :is-loading="isLoading">
           Login
         </MyButton>
@@ -20,24 +20,26 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import {useStore} from '@/stores/auth'
-import { useRouter } from 'vue-router';
+import router from '@/router';
+import { Action as AuthAction } from '@/services/auth/Action';
+import { ref } from 'vue';
 
 const email = ref('')
 const isLoading = ref(false)
-const authStore = useStore();
-const router = useRouter()
+const errorText = ref('')
 
 async function onSubmit() {
-  isLoading.value = true
-  await authStore.login({
-    email: email.value
-  })
-
-  router.push({name:'user'})
-
-  isLoading.value = false
+  try {
+    isLoading.value = true
+    errorText.value = ''
+    await AuthAction.login(email.value)
+    router.push({ name: 'users' })
+  } catch (error: any) {
+    isLoading.value = false
+    console.error(error.message)
+    const err = JSON.parse(error.message)
+    errorText.value = err[0]?.message ? err[0]?.message : ''
+  }
 }
 
 </script>

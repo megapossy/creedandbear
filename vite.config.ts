@@ -5,11 +5,13 @@ import vue from '@vitejs/plugin-vue'
 import VueDevTools from 'vite-plugin-vue-devtools'
 import svgLoader from 'vite-svg-loader'
 
+import tailwind from "tailwindcss"
+import autoprefixer from "autoprefixer"
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
-    VueDevTools(),
+    // VueDevTools(),
     svgLoader({
       defaultImport: 'component' // or 'raw'
     })
@@ -25,6 +27,9 @@ export default defineConfig({
         // this will be on all components
         additionalData: `@use "sass:math";`
       }
-    }
+    },
+    postcss: {
+      plugins: [tailwind(), autoprefixer()],
+    },
   }
 })
