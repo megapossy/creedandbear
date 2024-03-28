@@ -1,8 +1,8 @@
 <template>
 
-  <Pagination v-slot="{ page }" :total="props.total" :sibling-count="2" show-edges :page="_page"
+  <Pagination v-slot="{ page }" :total="props.total" :sibling-count="0" show-edges :page="_page"
     @update:page="(e) => _page = e">
-    <PaginationList v-slot="{ items }" class="flex items-center gap-1">
+    <PaginationList v-slot="{ items }" class="flex flex-wrap items-center gap-1">
       <PaginationFirst />
       <PaginationPrev />
 

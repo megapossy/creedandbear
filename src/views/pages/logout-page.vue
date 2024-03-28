@@ -5,7 +5,7 @@
         <CardHeader class="flex flex-row items-center">
           <div class="grid gap-2">
             <CardTitle class="text-2xl font-bold ">Logout</CardTitle>
-            <CardDescription  class="text-xl mt-2">Are you sure you want to logout?</CardDescription>
+            <CardDescription class="text-xl mt-2">Are you sure you want to logout?</CardDescription>
 
           </div>
         </CardHeader>
@@ -24,12 +24,16 @@
 import Content from "@/views/layouts/default/content.vue"
 import router from '@/router';
 import { Action as AuthAction } from '@/services/auth/Action';
-import { Card,CardDescription, CardContent, CardHeader, CardTitle } from '@/views/components/shadcn/ui/card';
+import { Card, CardDescription, CardContent, CardHeader, CardTitle } from '@/views/components/shadcn/ui/card';
 
 
 const logout = () => {
-  AuthAction.logout();
-  router.push({ name: 'login' })
+  try {
+    AuthAction.logout();
+    router.push({ name: 'login' })
+  } catch (error) {
+    console.error(error);
+  }
 }
 </script>
 

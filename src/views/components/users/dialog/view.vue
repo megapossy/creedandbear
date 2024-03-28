@@ -7,41 +7,36 @@
         </DialogTitle>
 
       </DialogHeader>
-      <div class="flex flex-col-reverse">
-        <div class="flex flex-col space-y-2 py-4">
-          <div class="grid grid-cols-5 items-center gap-4">
-            <Label for="name" class="text-right col-span-2 md:col-span-1">
-              First Name:
-            </Label>
-            <p class="text-wrap break-all font-bold col-span-3 md:col-span-4">{{ userData?.first_name }}</p>
-          </div>
-          <div class="grid grid-cols-5 items-center gap-4">
-            <Label for="name" class="text-right col-span-2 md:col-span-1">
-              Last Name:
-            </Label>
-            <p class="text-wrap break-all font-bold col-span-3 md:col-span-4">{{ userData?.last_name }}</p>
-          </div>
-          <div class="grid grid-cols-5 items-center gap-4">
-            <Label for="name" class="text-right col-span-2 md:col-span-1">
-              Email:
-            </Label>
-            <p class="text-wrap break-all font-bold col-span-3 md:col-span-4">{{ userData?.email }}</p>
-          </div>
-        </div>
-        <div class="flex-1 min-w-28 flex items-center justify-center">
+      <div class="flex flex-col sm:flex-row ">
+        <div class="w-44 my-4 flex items-center justify-center mx-auto sm:mx-0">
           <div class="h-28 w-28 min-w-28 mb-2 rounded-full overflow-hidden border-2
-        flex items-center justify-center
-        ">
+          flex items-center justify-center">
             <img v-if="userData?.avatar" class="h-28 w-28 min-w-28" :src="userData.avatar" />
             <CircleUser v-else class="h-28 w-28 min-w-28" />
           </div>
+        </div>      
+        <div class="flex flex-col space-y-2 py-4">
+          <div class="flex flex-col">
+            <Label for="name" class="">
+              First Name
+            </Label>
+            <p class="text-wrap break-all font-bold text-xl">{{ userData?.first_name }}</p>
+          </div>
+          <div class="flex flex-col">
+            <Label for="name" class="">
+              Last Name
+            </Label>
+            <p class="text-wrap break-all font-bold text-xl">{{ userData?.last_name }}</p>
+          </div>
+          <div class="flex flex-col">
+            <Label for="name" class="">
+              Email
+            </Label>
+            <p class="text-wrap break-all font-bold text-xl">{{ userData?.email }}</p>
+          </div>
         </div>
+
       </div>
-      <!-- <DialogFooter>
-        <MyButton type="submit">
-          Delete
-        </MyButton>
-      </DialogFooter> -->
     </DialogContent>
   </Dialog>
 </template>

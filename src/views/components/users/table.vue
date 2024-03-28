@@ -5,16 +5,22 @@
         <CardTitle class="flex justify-between">
           <div>
             Users
-            <SVGLoading v-if="isLoadingFetchUser" class="h-5 w-5 inline text-slate-400 animate-spin ms-2 " />
+            <span class="font-light text-xs ms-2" v-if="isLoadingFetchUser">
+              fetching user
+              <SVGLoading class="h-5 w-5 inline text-slate-400 animate-spin ms-1 " />
+            </span>
           </div>
           <div class="flex">
 
             <PlusCircle class="me-3" :class="{
               'cursor-default opacity-40': isFetching || isLoadingFetchUser,
               'cursor-pointer': !(isFetching || isLoadingFetchUser)
-            }" @click="() => {
-              if (!(isFetching || isLoadingFetchUser))
-                execute()
+            }" @click="async () => {
+              if (!(isFetching || isLoadingFetchUser)) {
+                modalAction = ''
+                await nextTick()
+                modalAction = 'create'
+              }
             }" />
 
             <RefreshCcw class="" :class="{
@@ -25,7 +31,7 @@
                 execute()
             }" />
 
-            </div>
+          </div>
         </CardTitle>
       </div>
     </CardHeader>
@@ -43,19 +49,20 @@
             <Skeleton class="h-8 w-8 min-w-8 rounded-full" />
           </div>
         </div>
-        <div v-else-if="!users.hasUsers" class="flex flex-col justify-center items-center p-8">
+        <div v-else-if="!Users.hasUsers" class="flex flex-col justify-center items-center p-8">
           <PackageOpenIcon class="text-7xl mt-4" width="1em" height="1em" />
-          <p class="text-xl opacity-50 mt-4">No users...</p>
+          <p class="text-xl opacity-50 mt-4">No data</p>
         </div>
         <Table v-else>
           <TableBody>
-            <Row v-for="user in users.dataAsUsers" :key="user.data?.id" :user="user" />
+            <Row v-for="user in Users.dataAsUsers" :key="user.data?.id" :user="user" />
           </TableBody>
         </Table>
       </FadeUp>
       <ViewUserDialog :action="modalAction" :user="selectedUser" />
       <EditUserDialog :action="modalAction" :user="selectedUser" />
       <DeleteUserDialog :action="modalAction" :user="selectedUser" />
+      <CreateUserDialog :action="modalAction" />
 
     </CardContent>
     <FadeUp>
@@ -71,9 +78,11 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/views/co
 import { Skeleton } from '@/views/components/shadcn/ui/skeleton'
 import { Table, TableBody } from '@/views/components/shadcn/ui/table'
 
+import CreateUserDialog from "./dialog/create.vue"
 import EditUserDialog from "./dialog/edit.vue"
 import ViewUserDialog from "./dialog/view.vue"
 import DeleteUserDialog from "./dialog/delete.vue"
+
 import Pagination from "./pagination.vue"
 import Row from "./row.vue"
 import SVGLoading from "@/assets/images/loading.svg"
@@ -82,32 +91,45 @@ import { Fetch as UserFetch } from '@/services/user/Fetch'
 import { User } from '@/services/user/User'
 import { Users } from '@/services/user/Users'
 import { PackageOpenIcon, RefreshCcw, PlusCircle } from 'lucide-vue-next'
-import { onMounted, ref, provide } from 'vue'
+import { onMounted, ref, provide, nextTick, watch } from 'vue'
 import { provider, type Action } from "@/composables/userModalProvider"
 import { useRoute } from 'vue-router'
+import { useToast } from '@/views/components/shadcn/ui/toast/use-toast'
 
-const users = new Users();
+
+
+const { toast } = useToast()
+
 const page = ref(1)
-const { data, isFetching, execute } = UserFetch.createUseFetchUsers({ page })
+const { data, isFetching, execute, error } = UserFetch.createUseFetchUsers({ page })
+watch(error, (nError) => {
+  if (nError) toast({
+    description: `Error retrieving users data!`,
+  });
+})
 
 const isLoadingFetchUser = ref(false);
 provide('isLoadingFetchUser', isLoadingFetchUser)
 const route = useRoute();
 onMounted(async () => {
-  if (!users.hasUsers) {
+  if (!Users.hasUsers) {
     await execute();
-    if (data.value?.users)
-      users.setUsersToStore(data.value.users)
   }
 
   // with userId params 
   if (route.params?.userId && !Array.isArray(route.params?.userId)) {
     isLoadingFetchUser.value = true
-    const userRes = await UserFetch.userById(Number.parseInt(route.params.userId))
-    const userFnd = new User(userRes)
-    if (userFnd.data) {
-      selectedUser.value = userFnd
-      modalAction.value = 'view'
+    try {
+      const userRes = await UserFetch.userById(Number.parseInt(route.params.userId))
+      const userFnd = new User(userRes)
+      if (userFnd.data) {
+        selectedUser.value = userFnd
+        modalAction.value = 'view'
+      }
+    } catch (error) {
+      toast({
+        description: `Error retrieving user data!`,
+      });
     }
     isLoadingFetchUser.value = false
   }
@@ -117,17 +139,9 @@ const selectedUser = ref<User | undefined>();
 const modalAction = ref<Action | undefined>();
 provider((userId, action) => {
   selectedUser.value = new User(userId)
-  modalAction.value = undefined
-  if (action === 'view') {
-    modalAction.value = 'view'
-  }
-  else if (action === 'edit') {
-    modalAction.value = 'edit'
-  }
-  else if (action === 'delete') {
-    modalAction.value = 'delete'
-  }
+  modalAction.value = action
 })
+
 
 
 </script>

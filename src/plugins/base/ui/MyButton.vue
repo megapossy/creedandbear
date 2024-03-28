@@ -27,6 +27,8 @@ const clr = {
 const btnClassColor = clr[props.btnType]
 const btnClass = cn(btnClassDef + ` ${btnClassColor}`, props.class);
 
+
+
 </script>
 <script lang="ts">
 import MyButton from "./MyButton.vue"

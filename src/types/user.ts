@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 const imgTypes = ['apng', 'avif', 'gif', 'jpeg', 'jpg', 'png', 'svg', 'webp', 'bmp', 'ico', 'tiff']
 
-export const UserSchema = z.object({
+const user = {
   id: z.number({
     invalid_type_error: 'Invalid ID!'
   }),
@@ -41,7 +41,26 @@ export const UserSchema = z.object({
         message: 'Invalid Avatar!'
       }
     )
+}
+
+export const CreateUserSchema = z.object({
+  email: user.email,
+  first_name: user.first_name,
+  last_name: user.last_name
 })
+export type CreateUserType = z.infer<typeof CreateUserSchema>
+export type FlattenedCreateUserErrors = z.inferFlattenedErrors<typeof CreateUserSchema>;
+
+export const EditUserSchema = z.object({
+  email: user.email.optional(),
+  first_name: user.first_name.optional(),
+  last_name: user.last_name.optional()
+})
+export type EditUserType = z.infer<typeof EditUserSchema>
+export type FlattenedEditUserErrors = z.inferFlattenedErrors<typeof EditUserSchema>;
+
+
+export const UserSchema = z.object(user)
 export type UserType = z.infer<typeof UserSchema>
 
 export const UsersSchema = z.array(UserSchema)

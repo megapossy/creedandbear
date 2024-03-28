@@ -1,6 +1,6 @@
 import { inject, provide } from 'vue'
 
-export type Action = 'view' | 'edit' | 'delete'
+export type Action = 'view' | 'edit' | 'delete' | 'create' | ''
 
 export const provider = (cb: (userId: number, action: Action) => void) => {
   provide('showUserModal', (userId: number, action: Action) => {

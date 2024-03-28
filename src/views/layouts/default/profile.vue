@@ -5,21 +5,21 @@
     <DropdownMenu>
       <DropdownMenuTrigger as-child>
         <Button variant="secondary" size="icon" class="rounded-full overflow-hidden border-2">
-          <img v-if="auth.data?.avatar" class="h-8 w-8"  :src="auth.data?.avatar" />
+          <img v-if="Auth.data?.avatar" class="h-8 w-8"  :src="Auth.data?.avatar" />
           <CircleUser v-else class="h-8 w-8" />
           <span class="sr-only">Toggle user menu</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuLabel class="text-xl font-bold">
-          {{ auth.data?.first_name }}
-          {{ auth.data?.last_name }}
+          {{ Auth.data?.first_name }}
+          {{ Auth.data?.last_name }}
         </DropdownMenuLabel>
         <DropdownMenuLabel>
           <div class="flex space-x-2">
             <AtSign />
             <span class="opacity-60">
-              {{ auth.data?.email }}
+              {{ Auth.data?.email }}
             </span>
           </div>
         </DropdownMenuLabel>
@@ -40,7 +40,6 @@ import { DropdownMenu, DropdownMenuSeparator, DropdownMenuContent, DropdownMenuI
 import { CircleUser, AtSign } from 'lucide-vue-next';
 
 
-const auth = new Auth()
 
 </script>
 

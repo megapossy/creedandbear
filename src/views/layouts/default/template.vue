@@ -13,6 +13,9 @@
         </FadeUp>
       </router-view>
     </main>
+    <Teleport to="#toast-section">
+      <Toaster duration="100000" />
+    </Teleport>
   </div>
 </template>
 
@@ -20,6 +23,8 @@
 import NavMobile from './nav-mobile.vue';
 import Nav from './nav.vue';
 import Profile from './profile.vue';
+
+import Toaster from '@/views/components/shadcn/ui/toast/Toaster.vue'
 
 </script>
 

@@ -3,8 +3,7 @@ import type { NavigationGuard } from 'vue-router'
 
 export const auth: NavigationGuard = (to, from, next) => {
   if (to.meta?.authentication) {
-    const auth = new Auth()
-    if (!auth.isUserLoggedIn) {
+    if (!Auth.isUserLoggedIn) {
       next({ name: 'login' })
       return
     }

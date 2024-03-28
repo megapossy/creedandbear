@@ -1,42 +1,49 @@
+
+@use "./poppins-font";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-
-
-
 /* width */
 ::-webkit-scrollbar {
-  width: 5px ;
+  width: 5px;
 }
 ::-webkit-scrollbar:horizontal {
-  height: 10px ;
+  height: 10px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: theme("colors.white");
+  background: theme('colors.white');
 }
 ::-webkit-scrollbar-track:horizontal {
-  background: theme("colors.blue.950");
+  background: theme('colors.blue.950');
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: theme("colors.blue.950");
+  background: theme('colors.blue.950');
   border-radius: 5px;
 }
 ::-webkit-scrollbar-thumb:horizontal {
-  background: theme("colors.white");
+  background: theme('colors.white');
   border-radius: 5px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: theme("colors.blue.950");
+  background: theme('colors.blue.950');
   border-radius: 5px;
 }
 ::-webkit-scrollbar-thumb:hover:horizontal {
-  background: theme("colors.white");
+  background: theme('colors.white');
 }
 
+html,
+body {
+  font-size: 16px;
+  font-family: 'Poppins', Arial;
+  font-weight: normal;
+  scroll-behavior: smooth;  
+}

@@ -4,7 +4,7 @@
       <div class="grid gap-4">
         <div class="flex flex-col space-y-2 text-center">
           <h1 class="text-2xl font-semibold tracking-tight">
-            Sign-in with Email
+            Sign-in
           </h1>
           <p class="text-sm text-muted-foreground">
             Enter your email below to sign-in
@@ -23,6 +23,7 @@
 import router from '@/router';
 import { Action as AuthAction } from '@/services/auth/Action';
 import { ref } from 'vue';
+import { z } from 'zod'
 
 const email = ref('')
 const isLoading = ref(false)
@@ -36,11 +37,15 @@ async function onSubmit() {
     router.push({ name: 'users' })
   } catch (error: any) {
     isLoading.value = false
-    console.error(error.message)
-    const err = JSON.parse(error.message)
-    errorText.value = err[0]?.message ? err[0]?.message : ''
+    if(error instanceof z.ZodError) {
+      const formatted = error.flatten().formErrors;
+      errorText.value = formatted[0] ? formatted[0] : ''
+    } else {
+      errorText.value = error.message
+    }
   }
 }
+
 
 </script>
 
