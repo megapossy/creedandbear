@@ -9,13 +9,13 @@ import { Users } from '@/services/user/Users'
 
 export class Fetch {
   static async userById(userId: UserType['id']) {
-    const res = await Fetch.userByIdAPI(userId);
+    const res = await Fetch.userByIdAPI(userId)
     return {
       ...res.user
     }
   }
 
-  private static async userByIdAPI(userId: UserType['id']){
+  private static async userByIdAPI(userId: UserType['id']) {
     // fake api
     await waits(2000)
     const user = {
@@ -34,8 +34,9 @@ export class Fetch {
 
   static createUseFetchUsers(options: { page: Ref<number> }) {
     const url = computed(() => {
-      return 'http://localhost:5173/' + options.page.value
-      // return 'http://httpbin.org/status/500?' + options.page.value
+      // return 'https://httpbin.org/get?page=' + options.page.value
+      return 'https://httpbin.org/delay/2?page=' + options.page.value
+      // return 'http://httpbin.org/status/500?' + options.page.value // simulate error url
     })
     return useFetch<{
       users: UserType[]
@@ -45,23 +46,29 @@ export class Fetch {
     }>(url, {
       async afterFetch(ctx) {
         if (ctx.response.ok) {
-
           // fake DATA
-          const users: UserType[] = faker.helpers.multiple(createFakeUser, {
-            count: 12
-          })
+          const users: UserType[] = faker.helpers.multiple(
+            () => ({
+              id: faker.number.int({ min: 2, max: 100 }),
+              email: faker.internet.email(),
+              first_name: faker.person.firstName(),
+              last_name: faker.person.lastName(),
+              avatar: faker.image.avatar()
+            }),
+            {
+              count: 12
+            }
+          )
           ctx.data = {
             users: users,
             page: options.page.value,
             total: 120,
             total_pages: 10
           }
-          await waits(2000)
           /////////////////////////////////
 
           // set to store
-          Users.setUsersToStore(users)  
-          
+          Users.setUsersToStore(users)
         }
         return ctx
       },
@@ -71,12 +78,3 @@ export class Fetch {
   }
 }
 
-function createFakeUser() {
-  return {
-    id: faker.number.int({ min: 2, max: 100 }),
-    email: faker.internet.email(),
-    first_name: faker.person.firstName(),
-    last_name: faker.person.lastName(),
-    avatar: faker.image.avatar()
-  }
-}

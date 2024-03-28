@@ -1,6 +1,8 @@
 <template>
   <Dialog v-model:open="isShown">
-    <DialogContent to="#modal-section" class="max-w-[415px] sm:max-w-[625px] bg-white">
+    <DialogContent to="#modal-section" class="max-w-[415px] sm:max-w-[625px] bg-white" @open-auto-focus="(e) => {
+    e.preventDefault();
+  }">
       <DialogHeader>
         <DialogTitle class="text-2xl text-left flex items-center">
           <SquarePen class="me-3" /> Edit Profile
@@ -56,7 +58,7 @@
             <span v-if="errorText">{{ errorText }}</span>
           </p>
           <div>
-            <MyButton type="button" @click="onSubmit" :is-loading="isLoading">
+            <MyButton type="button" :disabled="noData" @click="onSubmit" :is-loading="isLoading">
               Update
             </MyButton>
 
@@ -92,6 +94,7 @@ const props = defineProps<{
 }>()
 const userData = computed(() => props.user?.data)
 
+
 const reset = {
   first_name: '',
   last_name: '',
@@ -116,7 +119,10 @@ type FormType = {
 
 const formData = ref<FormType>({ ...reset })
 const formError = ref<FormType>({ ...reset })
-
+  const noData = computed(() => !formData.value?.first_name &&
+  !formData.value?.last_name &&
+  !formData.value?.email
+)
 
 const isLoading = ref(false)
 const errorText = ref('')
@@ -141,7 +147,6 @@ async function onSubmit() {
     isLoading.value = false
     if (error instanceof z.ZodError) {
       const formatted: FlattenedEditUserErrors = error.flatten()
-      console.log('formatted.fieldErrors',formatted.fieldErrors)
       formError.value.first_name = formatted.fieldErrors.first_name?.[0] || ''
       formError.value.last_name = formatted.fieldErrors.last_name?.[0] || ''
       formError.value.email = formatted.fieldErrors.email?.[0] || ''

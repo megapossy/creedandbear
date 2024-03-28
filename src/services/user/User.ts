@@ -11,12 +11,20 @@ export class User {
     this._store = useStore()
 
     if (typeof user === 'number') {
+      // throw error if not found in store
+      if(!this._store.users.find((e) => e.id === user)) 
+      throw new Error('User not found!')
+
       this._userId = user
-    } else if (user) {
+    } 
+    // if object then search ins store 
+    else if (user) {
       const _user = this._store.users.find((e) => e.id === user.id)
       if (_user) {
         this._userId = user.id
-      } else {
+      } 
+      // if not exist add to store
+      else {
         this._store.users = [user, ...this._store.users]
         this._userId = user.id
       }
@@ -38,9 +46,11 @@ export class User {
     }
     const parse = EditUserSchema.parse(toParse)
     await User.editAPI(updateUser)
-    this.data.first_name = parse.first_name || this.data.first_name
-    this.data.last_name = parse.last_name || this.data.last_name
-    this.data.email = parse.email || this.data.email
+
+    // update store
+    if(parse.first_name) this.data.first_name = parse.first_name 
+    if(parse.last_name) this.data.last_name = parse.last_name
+    if(parse.email) this.data.email = parse.email
   }
 
   private static async editAPI(user: { first_name: string; last_name: string; email: string }) {
@@ -56,10 +66,16 @@ export class User {
     if (!this._userId || !this.data) return
 
     await User.deleteAPI(this._userId)
+
+    // delete from store
     const fdIdx = this._store.users.findIndex((e) => e.id === this._userId)
     this._store.users.splice(fdIdx, 1)
   }
 
+  static getUserFromStoreById(userId:number){
+    const store = useStore()
+    return store.users.find((e) => e.id === userId)
+  }
   
   private static async deleteAPI(userId: number) {
     // fake api

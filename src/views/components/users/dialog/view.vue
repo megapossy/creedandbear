@@ -1,6 +1,10 @@
 <template>
   <Dialog v-model:open="isShown">
-    <DialogContent to="#modal-section" class="max-w-[415px] sm:max-w-[625px] bg-white">
+    <DialogContent to="#modal-section" 
+    class="max-w-[415px] sm:max-w-[625px] bg-white"
+    @open-auto-focus="(e) => {
+      e.preventDefault();
+    }">
       <DialogHeader>
         <DialogTitle class="text-2xl text-left flex items-center">
           <Search class="me-3" /> View Profile

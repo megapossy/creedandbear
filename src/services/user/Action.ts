@@ -7,8 +7,6 @@ import { faker } from '@faker-js/faker'
 
 export class Action {
   static async createUser(newUser: { first_name: string; last_name: string; email: string }) {
-    console.log('Creating:', newUser)
-
     const parsed = CreateUserSchema.parse(newUser)
     const res = await Action.createUserAPI(parsed)
     const store = useStore()

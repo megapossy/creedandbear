@@ -33,7 +33,6 @@ defineEmits<{
 const vFocus = {
   mounted: (el:HTMLInputElement) => {
     if (props.focus) {
-      console.log('focusing')
       el.focus()
     }
   }

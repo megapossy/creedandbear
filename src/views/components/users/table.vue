@@ -3,10 +3,9 @@
     <CardHeader class="flex flex-row items-center">
       <div class="grid gap-2 flex-1">
         <CardTitle class="flex justify-between">
-          <div>
+          <div class="flex items-center">
             Users
-            <span class="font-light text-xs ms-2" v-if="isLoadingFetchUser">
-              fetching user
+            <span class="font-light text-xs ms-2" v-if="isLoadingFetchUser ">
               <SVGLoading class="h-5 w-5 inline text-slate-400 animate-spin ms-1 " />
             </span>
           </div>
@@ -120,6 +119,7 @@ onMounted(async () => {
   if (route.params?.userId && !Array.isArray(route.params?.userId)) {
     isLoadingFetchUser.value = true
     try {
+      // fetch and add user to store if not exist
       const userRes = await UserFetch.userById(Number.parseInt(route.params.userId))
       const userFnd = new User(userRes)
       if (userFnd.data) {

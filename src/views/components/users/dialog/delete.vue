@@ -1,8 +1,10 @@
 <template>
   <Dialog v-model:open="isShown">
-    <DialogContent to="#modal-section" class="max-w-[415px] sm:max-w-[625px] bg-white" @open-auto-focus="(e) => {
-    e.preventDefault();
-  }">
+    <DialogContent to="#modal-section" 
+    class="max-w-[415px] sm:max-w-[625px] bg-white" 
+    @open-auto-focus="(e) => {
+      e.preventDefault();
+    }">
       <DialogHeader>
         <DialogTitle class="text-2xl text-left flex items-center">
           <Trash2 class="me-3" /> Delete User
@@ -46,13 +48,11 @@
           </p>
         </div>
 
-
         <div class="flex flex-row justify-between items-center w-full">
-
-          <MyButton class="bg-black px-14" type="button" @click="isShown = false" :is-loading="isLoading">
+          <MyButton class="bg-black w-2/5" type="button" @click="isShown = false" :is-loading="isLoading">
             No
           </MyButton>
-          <MyButton class="bg-red-500 px-14" type="button" @click="onSubmit" :is-loading="isLoading">
+          <MyButton class="bg-red-500 w-2/5" type="button" @click="onSubmit" :is-loading="isLoading">
             Yes!
           </MyButton>
         </div>
