@@ -69,9 +69,8 @@ describe('LoginForm.vue', () => {
     const form = wrapper.find('[data-testid="form"]')
     const input = wrapper.find('[data-testid="input"] input')
 
-    const mockLogin = vi
-      .spyOn(AuthActionMock as any, 'login')
-      .mockResolvedValueOnce(undefined)
+    vi.spyOn(AuthActionMock as any, 'login')
+    .mockResolvedValueOnce(undefined)
     const spyRouterPush = vi.spyOn(router, 'push')
 
     await input.setValue('superuser@creedandbear.com')
