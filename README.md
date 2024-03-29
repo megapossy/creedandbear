@@ -4,7 +4,7 @@ Start at [creedandbear.pages.dev/login](https://creedandbear.pages.dev/login)
 Use superuser@creedandbear.com to be able to login. I disabled auth gaurds by always adding a superuser@creedandbear.com user.
 
 ## Note on Build Bundle
-Faker added about 1mb to the bundle. Its being used when getting users. Will be removed if fake data is not needed anymore. 
+Faker.JS added about 1mb to the bundle. Its being used when getting users. Will be removed if fake data is not needed anymore. 
 
 ## Project Setup
 
