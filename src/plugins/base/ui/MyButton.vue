@@ -10,9 +10,9 @@ import { cn } from "@/utils/helpers";
 import SVGLoading from "../icons/loading-blue.svg"
 const props = withDefaults(defineProps<{
   isLoading: boolean,
-  disabled: boolean,
+  disabled?: boolean,
   class?: string,
-  btnType: 'standard' | 'danger'
+  btnType?: 'standard' | 'danger'
 }>(), {
   isLoading: false,
   disabled: false,

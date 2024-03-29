@@ -1,4 +1,4 @@
-import { type UserType } from '@/types/user'
+import { UsersSchema, UserSchema, type UserType } from '@/types/user'
 
 import { faker } from '@faker-js/faker'
 
@@ -10,9 +10,8 @@ import { Users } from '@/services/user/Users'
 export class Fetch {
   static async userById(userId: UserType['id']) {
     const res = await Fetch.userByIdAPI(userId)
-    return {
-      ...res.user
-    }
+    const parsed = UserSchema.parse(res.user)
+    return { ...parsed }
   }
 
   private static async userByIdAPI(userId: UserType['id']) {
@@ -68,7 +67,8 @@ export class Fetch {
           /////////////////////////////////
 
           // set to store
-          Users.setUsersToStore(users)
+          const parsed = UsersSchema.parse(users)
+          Users.setUsersToStore(parsed)
         }
         return ctx
       },
@@ -77,4 +77,3 @@ export class Fetch {
     })
   }
 }
-

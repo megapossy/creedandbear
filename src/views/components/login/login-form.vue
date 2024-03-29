@@ -1,6 +1,6 @@
 <template>
   <div class="grid gap-6 sm:w-[350px] sm:p-0 p-8 m-auto ">
-    <form @submit.prevent="onSubmit">
+    <form data-testid="form" @submit.prevent="onSubmit">
       <div class="grid gap-4">
         <div class="flex flex-col space-y-2 text-center">
           <h1 class="text-2xl font-semibold tracking-tight">
@@ -10,8 +10,8 @@
             Enter your email below to sign-in
           </p>
         </div>
-        <MyInput v-model="email" label="Email" :error="errorText" />
-        <MyButton type="submit" :is-loading="isLoading">
+        <MyInput data-testid="input"  v-model="email" label="Email" :error="errorText" />
+        <MyButton data-testid="button" type="submit" :is-loading="isLoading">
           Login
         </MyButton>
       </div>

@@ -1,15 +1,12 @@
 <template>
   <Dialog v-model:open="isShown">
-    <DialogContent to="#modal-section" 
-    class="max-w-[415px] sm:max-w-[625px] bg-white"
-    @open-auto-focus="(e) => {
-      e.preventDefault();
-    }">
+    <DialogContent to="#modal-section" class="max-w-[415px] sm:max-w-[625px] bg-white" @open-auto-focus="(e) => {
+    e.preventDefault();
+  }">
       <DialogHeader>
         <DialogTitle class="text-2xl text-left flex items-center">
           <Search class="me-3" /> View Profile
         </DialogTitle>
-
       </DialogHeader>
       <div class="flex flex-col sm:flex-row ">
         <div class="w-44 my-4 flex items-center justify-center mx-auto sm:mx-0">
@@ -18,24 +15,24 @@
             <img v-if="userData?.avatar" class="h-28 w-28 min-w-28" :src="userData.avatar" />
             <CircleUser v-else class="h-28 w-28 min-w-28" />
           </div>
-        </div>      
+        </div>
         <div class="flex flex-col space-y-2 py-4">
           <div class="flex flex-col">
-            <Label for="name" class="">
+            <label for="name" class="">
               First Name
-            </Label>
+            </label>
             <p class="text-wrap break-all font-bold text-xl">{{ userData?.first_name }}</p>
           </div>
           <div class="flex flex-col">
-            <Label for="name" class="">
+            <label for="name" class="">
               Last Name
-            </Label>
+            </label>
             <p class="text-wrap break-all font-bold text-xl">{{ userData?.last_name }}</p>
           </div>
           <div class="flex flex-col">
-            <Label for="name" class="">
+            <label for="name" class="">
               Email
-            </Label>
+            </label>
             <p class="text-wrap break-all font-bold text-xl">{{ userData?.email }}</p>
           </div>
         </div>
@@ -52,7 +49,7 @@ import {
   DialogHeader,
   DialogTitle
 } from '@/views/components/shadcn/ui/dialog';
-import { Search } from 'lucide-vue-next';
+import { Search, CircleUser } from 'lucide-vue-next';
 
 import { type User } from '@/services/user/User';
 import { computed, ref, watch } from 'vue';

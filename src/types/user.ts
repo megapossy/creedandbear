@@ -27,20 +27,20 @@ const user = {
     .min(3, {
       message: 'Invalid Avatar!'
     })
-    .refine(
-      (val) => {
-        try {
-          const valArr = val.split('.')
-          const ext = valArr[val.length - 1]?.toLowerCase() || ''
-          return imgTypes.includes(ext)
-        } catch (error) {
-          return false
-        }
-      },
-      {
-        message: 'Invalid Avatar!'
-      }
-    )
+    // .refine(
+    //   (val) => {
+    //     try {
+    //       const valArr = val.split('.')
+    //       const ext = valArr[val.length - 1]?.toLowerCase() || ''
+    //       return imgTypes.includes(ext)
+    //     } catch (error) {
+    //       return false
+    //     }
+    //   },
+    //   {
+    //     message: 'Invalid Avatar!'
+    //   }
+    // )
 }
 
 export const CreateUserSchema = z.object({

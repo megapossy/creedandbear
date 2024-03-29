@@ -12,17 +12,16 @@ export class User {
 
     if (typeof user === 'number') {
       // throw error if not found in store
-      if(!this._store.users.find((e) => e.id === user)) 
-      throw new Error('User not found!')
+      if (!this._store.users.find((e) => e.id === user)) throw new Error('User not found!')
 
       this._userId = user
-    } 
-    // if object then search ins store 
+    }
+    // if object then search ins store
     else if (user) {
       const _user = this._store.users.find((e) => e.id === user.id)
       if (_user) {
         this._userId = user.id
-      } 
+      }
       // if not exist add to store
       else {
         this._store.users = [user, ...this._store.users]
@@ -45,12 +44,14 @@ export class User {
       last_name: updateUser.last_name == '' ? undefined : updateUser.last_name
     }
     const parse = EditUserSchema.parse(toParse)
-    await User.editAPI(updateUser)
+    const res = await User.editAPI(updateUser)
 
     // update store
-    if(parse.first_name) this.data.first_name = parse.first_name 
-    if(parse.last_name) this.data.last_name = parse.last_name
-    if(parse.email) this.data.email = parse.email
+    if (res.status == 'success') {
+      if (parse.first_name) this.data.first_name = parse.first_name
+      if (parse.last_name) this.data.last_name = parse.last_name
+      if (parse.email) this.data.email = parse.email
+    }
   }
 
   private static async editAPI(user: { first_name: string; last_name: string; email: string }) {
@@ -65,18 +66,20 @@ export class User {
   async delete() {
     if (!this._userId || !this.data) return
 
-    await User.deleteAPI(this._userId)
+    const res = await User.deleteAPI(this._userId)
 
     // delete from store
-    const fdIdx = this._store.users.findIndex((e) => e.id === this._userId)
-    this._store.users.splice(fdIdx, 1)
+    if (res.status == 'success') {
+      const fdIdx = this._store.users.findIndex((e) => e.id === this._userId)
+      this._store.users.splice(fdIdx, 1)
+    }
   }
 
-  static getUserFromStoreById(userId:number){
+  static getUserFromStoreById(userId: number) {
     const store = useStore()
     return store.users.find((e) => e.id === userId)
   }
-  
+
   private static async deleteAPI(userId: number) {
     // fake api
     await waits(2000)
@@ -85,5 +88,4 @@ export class User {
     }
     /////////////////////////////////
   }
-
 }

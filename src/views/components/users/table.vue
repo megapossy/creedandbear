@@ -5,7 +5,7 @@
         <CardTitle class="flex justify-between">
           <div class="flex items-center">
             Users
-            <span class="font-light text-xs ms-2" v-if="isLoadingFetchUser ">
+            <span class="font-light text-xs ms-2" v-if="isLoadingFetchUser">
               <SVGLoading class="h-5 w-5 inline text-slate-400 animate-spin ms-1 " />
             </span>
           </div>
@@ -94,11 +94,12 @@ import { onMounted, ref, provide, nextTick, watch } from 'vue'
 import { provider, type Action } from "@/composables/userModalProvider"
 import { useRoute } from 'vue-router'
 import { useToast } from '@/views/components/shadcn/ui/toast/use-toast'
-
+import { z } from 'zod'
 
 
 const { toast } = useToast()
 
+// fetch will re-execute each time page is updated
 const page = ref(1)
 const { data, isFetching, execute, error } = UserFetch.createUseFetchUsers({ page })
 watch(error, (nError) => {
