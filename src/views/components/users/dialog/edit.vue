@@ -42,13 +42,13 @@
 
       <div class="flex flex-col space-y-8 py-4 mb-4">
         <div class="flex flex-col">
-          <MyInput v-model="formData.first_name" :error="formError.first_name" label="First Name" />
+          <MyInput data-testid="first_name" v-model="formData.first_name" :error="formError.first_name" label="First Name" />
         </div>
         <div class="flex flex-col">
-          <MyInput v-model="formData.last_name" :error="formError.last_name" label="Last Name" />
+          <MyInput data-testid="last_name" v-model="formData.last_name" :error="formError.last_name" label="Last Name" />
         </div>
         <div class="flex flex-col">
-          <MyInput v-model="formData.email" :error="formError.email" label="Email" />
+          <MyInput data-testid="email" v-model="formData.email" :error="formError.email" label="Email" />
         </div>
       </div>
 
@@ -58,7 +58,7 @@
             <span v-if="errorText">{{ errorText }}</span>
           </p>
           <div>
-            <MyButton type="button" :disabled="noData" @click="onSubmit" :is-loading="isLoading">
+            <MyButton data-testid="update-btn" type="button" :disabled="noData" @click="onSubmit" :is-loading="isLoading">
               Update
             </MyButton>
 

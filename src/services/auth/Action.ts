@@ -6,7 +6,6 @@ import { waits } from '@/utils/helpers'
 import { faker } from '@faker-js/faker'
 
 export class Action {
-
   static async logout() {
     const authStore = useAuthStore()
     authStore.user = undefined
@@ -32,13 +31,11 @@ export class Action {
   }
 
   private static async loginAPI(email: string) {
-
     // fake api
     if (email !== 'superuser@creedandbear.com')
       throw new Error(`Testing phase, try superuser@creedandbear.com`)
-    // await waits(2000)
-    await fetch('https://httpbin.org/delay/2')
-
+    
+    await waits(2000)
     const user = {
       id: 1,
       email: 'superuser@creedandbear.com',

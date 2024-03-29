@@ -12,7 +12,7 @@ interface TestContext {
   wrapper: ReturnType<typeof mount>
 }
 
-describe.skip('LoginForm.vue', () => {
+describe('LoginForm.vue', () => {
   beforeEach<TestContext>((context) => {
     context.wrapper = mount(Component, {
       global: {
@@ -65,16 +65,16 @@ describe.skip('LoginForm.vue', () => {
     expect(wrapper.find('[data-testid="input"] p').html()).toContain('Invalid Credentials')
   })
 
-  test<TestContext>('ogin success', async ({ wrapper }) => {
+  test<TestContext>('login success', async ({ wrapper }) => {
     const form = wrapper.find('[data-testid="form"]')
     const input = wrapper.find('[data-testid="input"] input')
 
     const mockLogin = vi
       .spyOn(AuthActionMock as any, 'login')
-      .mockResolvedValueOnce(() => undefined)
+      .mockResolvedValueOnce(undefined)
     const spyRouterPush = vi.spyOn(router, 'push')
 
-    input.setValue('superuser@creedandbear.com')
+    await input.setValue('superuser@creedandbear.com')
     form.trigger('submit')
     await flushPromises()
     // should call router.push({ name: 'users' })

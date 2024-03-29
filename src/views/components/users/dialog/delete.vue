@@ -49,10 +49,10 @@
         </div>
 
         <div class="flex flex-row justify-between items-center w-full">
-          <MyButton class="bg-black w-2/5" type="button" @click="isShown = false" :is-loading="isLoading">
+          <MyButton data-testid="no-btn" class="bg-black w-2/5" type="button" @click="isShown = false" :is-loading="isLoading">
             No
           </MyButton>
-          <MyButton class="bg-red-500 w-2/5" type="button" @click="onSubmit" :is-loading="isLoading">
+          <MyButton data-testid="yes-btn" class="bg-red-500 w-2/5" type="button" @click="onSubmit" :is-loading="isLoading">
             Yes!
           </MyButton>
         </div>

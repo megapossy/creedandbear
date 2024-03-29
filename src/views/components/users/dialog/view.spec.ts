@@ -9,7 +9,7 @@ interface TestContext {
   wrapper: ReturnType<typeof mount>
 }
 
-describe.skip('View.vue', () => {
+describe('View.vue', () => {
   beforeEach<TestContext>((context) => {
     context.wrapper = mount(Component, {
       global: {

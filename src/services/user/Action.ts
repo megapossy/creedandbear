@@ -6,6 +6,11 @@ import { useStore } from '@/stores/users'
 import { faker } from '@faker-js/faker'
 
 export class Action {
+
+  static test(d:string){
+    return d
+  }
+
   static async createUser(newUser: { first_name: string; last_name: string; email: string }) {
     const parsed = CreateUserSchema.parse(newUser)
     const res = await Action.createUserAPI(parsed)
