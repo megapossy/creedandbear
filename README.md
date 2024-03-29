@@ -1,5 +1,5 @@
 # Cread and Bear Exam
-Start at [creedandbear.pages.dev/login](https://creedandbear.pages.dev/login)
+Start at [https://creedandbear.pages.dev/login](https://creedandbear.pages.dev/login)
 
 Use superuser@creedandbear.com to be able to login. I disabled auth gaurds by always adding a superuser@creedandbear.com user.
 
