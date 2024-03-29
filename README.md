@@ -1,18 +1,10 @@
-# creadandbear-exam
+# Cread and Bear Exam
+Start at [https://creedandbear.pages.dev/login](https://creedandbear.pages.dev/login)
 
-This template should help get you started developing with Vue 3 in Vite.
+Use superuser@creedandbear.com to be able to login. I disabled auth gaurds by always adding a superuser@creedandbear.com user.
 
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+## Note on Build Bundle
+Faker.JS added about 1mb to the bundle. Its being used when getting users. Will be removed if fake data is not needed anymore. 
 
 ## Project Setup
 
