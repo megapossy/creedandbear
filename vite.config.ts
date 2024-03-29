@@ -11,7 +11,7 @@ import autoprefixer from "autoprefixer"
 export default defineConfig({
   plugins: [
     vue(),
-    // VueDevTools(),
+    VueDevTools(),
     svgLoader({
       defaultImport: 'component' // or 'raw'
     })
@@ -31,5 +31,35 @@ export default defineConfig({
     postcss: {
       plugins: [tailwind(), autoprefixer()],
     },
+  },
+  build:{
+    rollupOptions: {
+      output: {
+        manualChunks,
+      },
+    },    
   }
 })
+
+
+function manualChunks(id: string) {
+  const fndIdx = chunkVendors.findIndex((el) =>
+    id.includes("node_modules/" + el.compare)
+  );
+  if (fndIdx >= 0) {
+    return "vendors_" + chunkVendors[fndIdx].filename;
+  } else if (id.includes("node_modules")) {
+    return "vendors";
+  }
+};
+
+
+const chunkVendors = [
+  { compare: "radix-vue", filename: "radix-vue" },
+  { compare: "lucide-vue-next", filename: "lucide-vue-next" },
+  { compare: "class-variance-authority", filename: "class-variance-authority" },
+  { compare: "pinia", filename: "pinia" },
+  { compare: "tailwind-merge", filename: "tailwind-merge" },
+  { compare: "@vueuse/core", filename: "at-vueuse-core" },
+  { compare: "@faker-js/faker", filename: "at-faker-js" },
+];
